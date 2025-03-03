@@ -3,17 +3,28 @@ plugins {
 	id 'org.springframework.boot' version '3.4.3'
 	id 'io.spring.dependency-management' version '1.1.7'
 	id "com.diffplug.spotless" version "7.0.2"
-
 }
 
 group = 'hr.lgotic'
 version = '0.0.1-SNAPSHOT'
-sourceCompatibility = '17'
 
 java {
 	toolchain {
 		languageVersion = JavaLanguageVersion.of(17)
 	}
+}
+
+ext {
+	springBootVersion = '3.4.3'
+	dependencyManagementVersion = '1.1.7'
+	spotlessVersion = '7.0.2'
+	caffeineVersion = '3.1.8'
+	mapstructVersion = '1.5.5.Final'
+	openApiVersion = '2.8.5'
+	flywayVersion = '9.22.2'
+	lombokVersion = '1.18.30'
+	junitPlatformVersion = '1.10.0'
+	postgresqlVersion = '42.7.1'
 }
 
 configurations {
@@ -27,15 +38,23 @@ repositories {
 }
 
 dependencies {
-	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-	implementation 'org.springframework.boot:spring-boot-starter-web'
-	implementation 'org.flywaydb:flyway-core'
-	implementation 'org.flywaydb:flyway-database-postgresql'
-	compileOnly 'org.projectlombok:lombok'
-	runtimeOnly 'org.postgresql:postgresql'
-	annotationProcessor 'org.projectlombok:lombok'
-	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+	implementation "org.springframework.boot:spring-boot-starter-data-jpa"
+	implementation "org.springframework.boot:spring-boot-starter-web"
+	implementation "org.flywaydb:flyway-core"
+	implementation "org.flywaydb:flyway-database-postgresql"
+	implementation "org.springframework.boot:spring-boot-starter-cache"
+	implementation "com.github.ben-manes.caffeine:caffeine:${caffeineVersion}"
+	implementation "org.mapstruct:mapstruct:${mapstructVersion}"
+	annotationProcessor "org.mapstruct:mapstruct-processor:${mapstructVersion}"
+	compileOnly "org.projectlombok:lombok"
+	runtimeOnly "org.postgresql:postgresql:${postgresqlVersion}"
+	annotationProcessor "org.projectlombok:lombok:${lombokVersion}"
+	testImplementation "org.springframework.boot:spring-boot-starter-test"
+	testRuntimeOnly "org.junit.platform:junit-platform-launcher:${junitPlatformVersion}"
+	implementation "org.springdoc:springdoc-openapi-starter-webmvc-ui:${openApiVersion}"
+	implementation 'org.springframework.security:spring-security-oauth2-jose:6.4.3'
+	implementation "org.springframework.boot:spring-boot-starter-security:${springBootVersion}"
+	implementation "org.springframework.boot:spring-boot-starter-oauth2-authorization-server:${springBootVersion}"
 }
 
 tasks.named('test') {
@@ -43,22 +62,18 @@ tasks.named('test') {
 }
 
 jar {
-	archiveFileName = 'product'
+	archiveFileName = 'product.jar'
 }
 
 compileJava.dependsOn 'spotlessApply'
 
 spotless {
 	java {
-
 		importOrder()
 		removeUnusedImports()
-
 		cleanthat()
-
 		googleJavaFormat()
 		formatAnnotations()
-
 	}
 
 	sql {

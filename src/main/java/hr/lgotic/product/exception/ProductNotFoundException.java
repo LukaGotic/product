@@ -1,2 +1,7 @@
-package hr.lgotic.product.exception;public class ProductNotFoundException {
+package hr.lgotic.product.exception;
+
+public class ProductNotFoundException extends RuntimeException {
+  public ProductNotFoundException(String message) {
+    super(message);
+  }
 }

@@ -18,8 +18,7 @@ bin/
 !**/src/test/**/bin/
 !gradle-wrapper.jar
 !gradle-wrapper.properties
-gradle/
-gradlew.bat
+
 
 ### IntelliJ IDEA ###
 .idea

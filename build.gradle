@@ -25,6 +25,7 @@ ext {
 	lombokVersion = '1.18.30'
 	junitPlatformVersion = '1.10.0'
 	postgresqlVersion = '42.7.1'
+	jjwtVersion = '0.12.5'
 }
 
 configurations {
@@ -42,6 +43,7 @@ dependencies {
 	implementation "org.springframework.boot:spring-boot-starter-web"
 	implementation "org.flywaydb:flyway-core"
 	implementation "org.flywaydb:flyway-database-postgresql"
+	implementation 'org.springframework.boot:spring-boot-starter-validation'
 	implementation "org.springframework.boot:spring-boot-starter-cache"
 	implementation "com.github.ben-manes.caffeine:caffeine:${caffeineVersion}"
 	implementation "org.mapstruct:mapstruct:${mapstructVersion}"
@@ -49,12 +51,18 @@ dependencies {
 	compileOnly "org.projectlombok:lombok"
 	runtimeOnly "org.postgresql:postgresql:${postgresqlVersion}"
 	annotationProcessor "org.projectlombok:lombok:${lombokVersion}"
-	testImplementation "org.springframework.boot:spring-boot-starter-test"
-	testRuntimeOnly "org.junit.platform:junit-platform-launcher:${junitPlatformVersion}"
+
 	implementation "org.springdoc:springdoc-openapi-starter-webmvc-ui:${openApiVersion}"
-	implementation 'org.springframework.security:spring-security-oauth2-jose:6.4.3'
 	implementation "org.springframework.boot:spring-boot-starter-security:${springBootVersion}"
 	implementation "org.springframework.boot:spring-boot-starter-oauth2-authorization-server:${springBootVersion}"
+	implementation "io.jsonwebtoken:jjwt-api:${jjwtVersion}"
+	runtimeOnly "io.jsonwebtoken:jjwt-impl:${jjwtVersion}"
+	runtimeOnly "io.jsonwebtoken:jjwt-jackson:${jjwtVersion}"
+
+	testImplementation "org.springframework.boot:spring-boot-starter-test"
+	testRuntimeOnly "org.junit.platform:junit-platform-launcher:${junitPlatformVersion}"
+	testImplementation 'com.h2database:h2'
+	testImplementation 'org.flywaydb:flyway-core'
 }
 
 tasks.named('test') {

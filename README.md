@@ -30,6 +30,7 @@ docker-compose up -d
 By default, the application runs with the dev profile for easier setup.
 Start the application using Gradle:
 ```sh
+cd ..
 ./gradlew bootRun
 ```
 
